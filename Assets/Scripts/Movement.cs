@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public float rotateSpeed;
+    public float forwardSpeed;
     void Update()
     {
-        
+        transform.position += transform.forward * (forwardSpeed * Time.deltaTime);
+        if (Input.GetMouseButton(0))
+        {
+            if (EventManager.GetDirection() == Direction.Right)
+            {
+                transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
+            }
+            else
+            {
+                transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
+            }
+        }
     }
 }
