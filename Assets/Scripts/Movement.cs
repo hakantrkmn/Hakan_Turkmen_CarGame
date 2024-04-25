@@ -8,17 +8,30 @@ public class Movement : MonoBehaviour
     public float forwardSpeed;
     void Update()
     {
-        transform.position += transform.forward * (forwardSpeed * Time.deltaTime);
-        if (Input.GetMouseButton(0))
+        if (GameManager.instance.gameState == GameStates.OnMove)
         {
-            if (EventManager.GetDirection() == Direction.Right)
+            transform.position += transform.forward * (forwardSpeed * Time.deltaTime);
+            if (Input.GetMouseButton(0))
             {
-                transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
-            }
-            else
-            {
-                transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
+                if (EventManager.GetDirection() == Direction.Right)
+                {
+                    transform.Rotate(0, -rotateSpeed * Time.deltaTime, 0);
+                }
+                else
+                {
+                    transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
+                }
             }
         }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                GameManager.instance.gameState = GameStates.OnMove;
+            }
+            
+        }
+        
+        
     }
 }

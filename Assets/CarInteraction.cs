@@ -5,8 +5,19 @@ using UnityEngine;
 
 public class CarInteraction : MonoBehaviour
 {
+    private CarController _carController;
+
+    private void Start()
+    {
+        _carController = GetComponentInParent<CarController>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        UnityEngine.Debug.Log("laskndlka");
+        if (other.GetComponent<Obstacle>())
+        {
+            _carController.Reset();
+            GameManager.instance.gameState = GameStates.Wait;
+        }
     }
 }
