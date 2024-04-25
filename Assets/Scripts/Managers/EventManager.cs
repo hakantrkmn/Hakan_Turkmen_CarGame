@@ -9,6 +9,7 @@ public static class EventManager
     public static Func<Direction> GetDirection;
     public static Func<Path> GetCurrentPath;
     public static Func<List<Vector3>> GetLastRoad;
+    public static Func<GameData> GetGameData;
 
     public static Action CarPassedThePath;
 

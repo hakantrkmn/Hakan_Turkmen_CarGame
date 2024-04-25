@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class Car : MonoBehaviour
 {
-    public Path path;
+    [HideInInspector] public Path path;
 
     protected virtual void OnEnable()
     {
@@ -16,7 +16,6 @@ public abstract class Car : MonoBehaviour
     protected virtual void OnDisable()
     {
         EventManager.CarHitObstacle -= Reset;
-
     }
 
     public virtual void Set()
@@ -29,6 +28,4 @@ public abstract class Car : MonoBehaviour
         transform.position = path.entrance.position;
         transform.forward = path.entrance.forward;
     }
-
-  
 }

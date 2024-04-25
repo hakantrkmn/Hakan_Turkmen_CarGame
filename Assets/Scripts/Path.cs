@@ -19,7 +19,7 @@ namespace CarGame
 
 
         public Car car;
-
+        
         public void Passed()
         {
             state = PathStates.Passed;
@@ -30,6 +30,13 @@ namespace CarGame
             car.path = this;
             (car as DummyCar).Set();
             (car as DummyCar).Reset();
+        }
+
+        public void ToggleCanvas(bool isOn)
+        {
+            entrance.gameObject.SetActive(isOn);
+            target.gameObject.SetActive(isOn);
+
         }
         
    

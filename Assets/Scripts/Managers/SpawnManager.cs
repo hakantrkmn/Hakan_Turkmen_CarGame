@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using CarGame;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -11,35 +13,51 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject pathPrefab;
 
-    public int currentPathIndex;
+    int _currentPathIndex;
 
     public Transform movementParent;
-
-    public List<Transform> movements;
-
-    private int _movementAmount = 0;
-
+    List<Transform> _movements = new List<Transform>();
+    int _movementAmount = 0;
     private List<Vector3> _roadPoints = new List<Vector3>();
+    
     private void OnEnable()
     {
-        EventManager.CarHitObstacle += CarHitObstacle;
+        EventManager.CarHitObstacle += () => _movementAmount = 0;
         EventManager.GetLastRoad += () => _roadPoints;
         EventManager.SampleMovement += SampleMovement;
-        EventManager.GetCurrentPath += GetCurrentPath;
+        EventManager.GetCurrentPath += () => paths[_currentPathIndex];
         EventManager.CarPassedThePath += CarPassedThePath;
     }
-
-    private void CarHitObstacle()
+    private void OnDisable()
     {
-        _movementAmount = 0;
+        EventManager.CarHitObstacle -= () => _movementAmount = 0;
+        EventManager.GetLastRoad -= () => _roadPoints;
+        EventManager.SampleMovement -= SampleMovement;
+        EventManager.CarPassedThePath -= CarPassedThePath;
+        EventManager.GetCurrentPath -= () => paths[_currentPathIndex];
     }
 
-  
+    private void Start()
+    {
+        for (int i = 0; i < paths.Count; i++)
+        {
+            if (i==0)
+            {
+                paths[i].ToggleCanvas(true);
+            }
+            else
+            {
+                paths[i].ToggleCanvas(false);
+            }
+        }
+    }
+
+
     private void SampleMovement(Transform car)
     {
-        if (_movementAmount < movements.Count)
+        if (_movementAmount < _movements.Count)
         {
-            var trn = movements[_movementAmount];
+            var trn = _movements[_movementAmount];
             trn.position = car.transform.position;
             trn.forward = car.transform.forward;
             _movementAmount++;
@@ -50,51 +68,43 @@ public class SpawnManager : MonoBehaviour
             trn.SetParent(movementParent);
             trn.position = car.transform.position;
             trn.forward = car.transform.forward;
-            movements.Add(trn);
+            _movements.Add(trn);
             _movementAmount++;
         }
-        
-
     }
 
     private void CarPassedThePath()
     {
-        currentPathIndex++;
+        _currentPathIndex++;
         CreatePoints();
-        paths[currentPathIndex-1].Passed();
-        EventManager.MoveToNextPath();
-        _movementAmount = 0;
+        paths[_currentPathIndex-1].Passed();
+        paths[_currentPathIndex-1].ToggleCanvas(false);
+        if (_currentPathIndex >= paths.Count)
+        {
+            Debug.Log("oyun bitti");
+        }
+        else
+        {
+            EventManager.MoveToNextPath();
+            _movementAmount = 0;
+            paths[_currentPathIndex].ToggleCanvas(true);
+        }
+        
     }
 
     void CreatePoints()
     {
         _roadPoints.Clear();
-        for (int i = 0; i < _movementAmount; i++)
+        for (var i = 0; i < _movementAmount; i++)
         {
-            _roadPoints.Add(movements[i].position);
+            _roadPoints.Add(_movements[i].position);
         }
     }
-
-    private void OnDisable()
-    {
-        EventManager.CarHitObstacle -= CarHitObstacle;
-        EventManager.GetLastRoad -= () => _roadPoints;
-        EventManager.SampleMovement -= SampleMovement;
-        EventManager.CarPassedThePath -= CarPassedThePath;
-        EventManager.GetCurrentPath -= GetCurrentPath;
-    }
     
-    
-
-    private Path GetCurrentPath()
-    {
-        return paths[currentPathIndex];
-    }
-
     [Button]
-    void CreatePath()
+    void InstantiatePath()
     {
-        var path = Instantiate(pathPrefab, transform);
+        var path = PrefabUtility.InstantiatePrefab(pathPrefab, transform);
         paths.Add(path.GetComponent<Path>());
     }
     
