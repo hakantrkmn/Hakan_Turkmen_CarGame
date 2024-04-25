@@ -8,6 +8,21 @@ public class CarManager : MonoBehaviour
 {
     public GameObject carPrefab;
 
+    private void OnEnable()
+    {
+        EventManager.MoveToNextPath += MoveToNextPath;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.MoveToNextPath -= MoveToNextPath;
+    }
+
+    private void MoveToNextPath()
+    {
+        SpawnNextCar();
+    }
+
     private void Start()
     {
         SpawnNextCar();
@@ -16,7 +31,7 @@ public class CarManager : MonoBehaviour
     void SpawnNextCar()
     {
         var path = EventManager.GetCurrentPath();
-        var car = Instantiate(carPrefab, path.entrance.position, quaternion.identity, transform).GetComponent<CarController>();
+        var car = Instantiate(carPrefab, path.entrance.position, quaternion.identity, transform).GetComponent<Car>();
         car.path = path;
         path.car = car;
         car.Set();

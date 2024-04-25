@@ -9,4 +9,8 @@ public static class EventManager
     public static Func<Direction> GetDirection;
     public static Func<Path> GetCurrentPath;
 
+    public static Action CarPassedThePath;
+
+    public static Action MoveToNextPath;
+
 }

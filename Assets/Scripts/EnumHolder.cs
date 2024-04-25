@@ -9,3 +9,9 @@ public enum GameStates
     Wait,
     OnMove
 }
+
+public enum PathStates
+{
+    NotPassed,
+    Passed
+}

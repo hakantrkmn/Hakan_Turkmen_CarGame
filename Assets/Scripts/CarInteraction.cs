@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CarGame;
 using UnityEngine;
 
 public class CarInteraction : MonoBehaviour
 {
-    private CarController _carController;
+    private Car _carController;
 
     private void Start()
     {
-        _carController = GetComponentInParent<CarController>();
+        _carController = GetComponentInParent<Car>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -18,6 +19,11 @@ public class CarInteraction : MonoBehaviour
         {
             _carController.Reset();
             GameManager.instance.gameState = GameStates.Wait;
+        }
+        if (other.GetComponentInParent<Path>())
+        {
+            GameManager.instance.gameState = GameStates.Wait;
+            EventManager.CarPassedThePath();
         }
     }
 }

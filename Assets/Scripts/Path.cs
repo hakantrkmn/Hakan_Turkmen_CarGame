@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace CarGame
 {
     public class Path : MonoBehaviour
     {
+        public PathStates state;
         public Transform entrance;
 
         public Transform target;
@@ -17,8 +19,17 @@ namespace CarGame
 
         public Transform movementsParent;
 
-        public CarController car;
+        public Car car;
 
+        public void Passed()
+        {
+            state = PathStates.Passed;
+            car = car.AddComponent<DummyCar>();
+            Destroy(car.GetComponent<PlayerCar>());
+            car.path = this;
+            (car as DummyCar).Set();
+            (car as DummyCar).Reset();
+        }
         public void AddMovement()
         {
             var trn = new GameObject().transform;

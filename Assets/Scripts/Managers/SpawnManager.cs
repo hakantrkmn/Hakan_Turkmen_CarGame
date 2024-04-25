@@ -16,10 +16,19 @@ public class SpawnManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.GetCurrentPath += GetCurrentPath;
+        EventManager.CarPassedThePath += CarPassedThePath;
+    }
+
+    private void CarPassedThePath()
+    {
+        currentPathIndex++;
+        paths[currentPathIndex-1].Passed();
+        EventManager.MoveToNextPath();
     }
 
     private void OnDisable()
     {
+        EventManager.CarPassedThePath -= CarPassedThePath;
         EventManager.GetCurrentPath -= GetCurrentPath;
     }
 
