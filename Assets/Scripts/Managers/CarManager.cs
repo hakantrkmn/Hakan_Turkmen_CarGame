@@ -18,6 +18,7 @@ public class CarManager : MonoBehaviour
         var path = EventManager.GetCurrentPath();
         var car = Instantiate(carPrefab, path.entrance.position, quaternion.identity, transform).GetComponent<CarController>();
         car.path = path;
+        path.car = car;
         car.Set();
     }
 }

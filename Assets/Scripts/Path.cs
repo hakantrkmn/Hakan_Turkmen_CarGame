@@ -15,6 +15,18 @@ namespace CarGame
 
         [Range(3, 15)] public float thickness = 5;
 
+        public Transform movementsParent;
+
+        public CarController car;
+
+        public void AddMovement()
+        {
+            var trn = new GameObject().transform;
+            trn.SetParent(movementsParent);
+            trn.position = car.transform.position;
+            trn.forward = car.transform.forward;
+
+        }
         private void OnDrawGizmos()
         {
             if (Selection.Contains(gameObject) || Selection.Contains(entrance.gameObject) || Selection.Contains(target.gameObject) || Selection.Contains(transform.root.gameObject))
