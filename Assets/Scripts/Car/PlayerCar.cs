@@ -15,7 +15,7 @@ public class PlayerCar : Car
             _timer += Time.deltaTime;
             if (_timer > sampleTime)
             {
-                path.AddMovement();
+                EventManager.SampleMovement(transform);
                 _timer = 0;
             }
         }

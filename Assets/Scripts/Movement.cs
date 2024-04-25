@@ -28,6 +28,11 @@ public class Movement : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 GameManager.instance.gameState = GameStates.OnMove;
+                if (EventManager.StartMoving != null)
+                {
+                    EventManager.StartMoving();
+                }
+                
             }
             
         }

@@ -17,7 +17,6 @@ namespace CarGame
 
         [Range(3, 15)] public float thickness = 5;
 
-        public Transform movementsParent;
 
         public Car car;
 
@@ -26,18 +25,15 @@ namespace CarGame
             state = PathStates.Passed;
             car = car.AddComponent<DummyCar>();
             Destroy(car.GetComponent<PlayerCar>());
+            Destroy(car.GetComponent<Movement>());
+
             car.path = this;
             (car as DummyCar).Set();
             (car as DummyCar).Reset();
         }
-        public void AddMovement()
-        {
-            var trn = new GameObject().transform;
-            trn.SetParent(movementsParent);
-            trn.position = car.transform.position;
-            trn.forward = car.transform.forward;
-
-        }
+        
+   
+        
         private void OnDrawGizmos()
         {
             if (Selection.Contains(gameObject) || Selection.Contains(entrance.gameObject) || Selection.Contains(target.gameObject) || Selection.Contains(transform.root.gameObject))
