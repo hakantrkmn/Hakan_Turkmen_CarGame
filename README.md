@@ -13,3 +13,5 @@ kamerayı doğrudan bakacak şekilde ayarladım. o kısım istenmediği için u�
 assigmentta yazılan her şey projede eksiksiz bulunuyor. ben masaüstü 1080x1920 ölçülerinde çalıştım. Mobilde de çalışıyor. kamera açısı problem olabilir. assigmentta olmadığı için ek olarak uğraşmadım. 
 
  Son olarak GameData Scriptableındaki değerleri değiştirerek istediğimiz ileri hız, dönme hızı ve hareketten örnek olma süresini ayarlayabiliriz. Sample Time olarak adlandırdığım değer arabayı oynattığımızda kaç saniyede bir örnek olacağının değeridir. 0.2 değeri beni memnun etti. istediğe göre değiştirilebilir. 
+
+ odin ve dotween assetlerini ekledim. odin editor için dotween de path için
