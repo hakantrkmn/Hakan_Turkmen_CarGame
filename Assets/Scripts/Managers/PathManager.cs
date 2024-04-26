@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class PathManager : MonoBehaviour
 {
     public List<Path> paths;
 
@@ -81,7 +81,7 @@ public class SpawnManager : MonoBehaviour
         paths[_currentPathIndex-1].ToggleCanvas(false);
         if (_currentPathIndex >= paths.Count)
         {
-            Debug.Log("oyun bitti");
+            EventManager.LevelCleared();
         }
         else
         {

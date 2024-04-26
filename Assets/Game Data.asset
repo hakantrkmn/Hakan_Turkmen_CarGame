@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Game Data
   m_EditorClassIdentifier: 
   sampleTime: 0.2
-  carSpeed: 10
-  carRotateSpeed: 50
+  carSpeed: 15
+  carRotateSpeed: 80

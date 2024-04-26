@@ -14,6 +14,7 @@ public class CarInteraction : MonoBehaviour
             GameManager.instance.gameState = GameStates.Wait;
         }
 
+        // target colliderına çarptı ve çarptığı target kendi targeti mı
         if (other.GetComponentInParent<Path>() && other.GetComponentInParent<Path>().car == GetComponent<Car>())
         {
             GameManager.instance.gameState = GameStates.Wait;

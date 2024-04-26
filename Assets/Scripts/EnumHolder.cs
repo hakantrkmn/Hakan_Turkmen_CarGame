@@ -7,11 +7,6 @@ public enum Direction
 public enum GameStates
 {
     Wait,
-    OnMove
+    OnMove,
 }
 
-public enum PathStates
-{
-    NotPassed,
-    Passed
-}

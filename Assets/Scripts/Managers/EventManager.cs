@@ -17,7 +17,8 @@ public static class EventManager
 
     public static Action StartMoving;
     public static Action CarHitObstacle;
-    
+    public static Action LevelCleared;
+
     public static Action<Transform> SampleMovement;
 
 

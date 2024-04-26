@@ -10,7 +10,6 @@ namespace CarGame
 {
     public class Path : MonoBehaviour
     {
-        public PathStates state;
         public Transform entrance;
 
         public Transform target;
@@ -19,24 +18,37 @@ namespace CarGame
 
 
         public Car car;
-        
+
+        private void OnValidate()
+        {
+            ConfigureUI();
+        }
+
         public void Passed()
         {
-            state = PathStates.Passed;
             car = car.AddComponent<DummyCar>();
+
             Destroy(car.GetComponent<PlayerCar>());
             Destroy(car.GetComponent<Movement>());
+            Destroy(car.GetComponent<CarInteraction>());
 
             car.path = this;
-            (car as DummyCar).Set();
-            (car as DummyCar).Reset();
+            (car as DummyCar)?.Set();
+            (car as DummyCar)?.Reset();
         }
 
         public void ToggleCanvas(bool isOn)
         {
             entrance.gameObject.SetActive(isOn);
             target.gameObject.SetActive(isOn);
+        }
 
+        void ConfigureUI()
+        {
+            var entranceCanvas = entrance.GetChild(0).transform;
+            entranceCanvas.up = entrance.forward;
+            entranceCanvas.localRotation = Quaternion.Euler(new Vector3(90, entranceCanvas.localRotation.eulerAngles.y,
+                entranceCanvas.localRotation.eulerAngles.z));
         }
         
    
@@ -50,14 +62,16 @@ namespace CarGame
 
                 Handles.color = Color.blue;
                 Handles.DrawLine(startPos, endPos, thickness);
+                
+                Handles.Label(endPos, "Car direction");
+                /*Gizmos.DrawCube(target.position,Vector3.one*2);
+                Gizmos.DrawCube(entrance.position,Vector3.one*2);
                 GUIStyle style = new GUIStyle();
                 style.normal.textColor = Color.yellow;
                 Handles.Label(entrance.position, "Entrance",style);
                 style.normal.textColor = Color.red;
                 Handles.Label(target.position, "Target",style);
-                Handles.Label(endPos, "Car direction");
-                Gizmos.DrawCube(target.position,Vector3.one*2);
-                Gizmos.DrawCube(entrance.position,Vector3.one*2);
+                */
 
             }
         }

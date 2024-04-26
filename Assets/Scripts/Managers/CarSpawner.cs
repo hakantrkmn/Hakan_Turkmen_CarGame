@@ -4,23 +4,18 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class CarManager : MonoBehaviour
+public class CarSpawner : MonoBehaviour
 {
     public GameObject carPrefab;
 
     private void OnEnable()
     {
-        EventManager.MoveToNextPath += MoveToNextPath;
+        EventManager.MoveToNextPath += SpawnNextCar;
     }
 
     private void OnDisable()
     {
-        EventManager.MoveToNextPath -= MoveToNextPath;
-    }
-
-    private void MoveToNextPath()
-    {
-        SpawnNextCar();
+        EventManager.MoveToNextPath -= SpawnNextCar;
     }
 
     private void Start()
