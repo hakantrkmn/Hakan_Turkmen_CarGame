@@ -14,7 +14,7 @@ namespace CarGame
 
         public Transform target;
 
-        [Range(3, 15)] public float thickness = 5;
+        [Range(3, 15)] public float thickness = 7;
 
 
         public Car car;
@@ -55,15 +55,22 @@ namespace CarGame
         
         private void OnDrawGizmos()
         {
-            if (Selection.Contains(gameObject) || Selection.Contains(entrance.gameObject) || Selection.Contains(target.gameObject) || Selection.Contains(transform.root.gameObject))
+            if (Selection.Contains(gameObject) || Selection.Contains(entrance.gameObject) || Selection.Contains(target.gameObject) )
             {
                 var startPos = entrance.position;
                 var endPos = entrance.position + (entrance.forward * 10);
 
                 Handles.color = Color.blue;
                 Handles.DrawLine(startPos, endPos, thickness);
+                GUIStyle style = new GUIStyle();
+                style.normal.textColor = Color.red;
+                Handles.Label(endPos, "Car direction",style);
                 
-                Handles.Label(endPos, "Car direction");
+                 startPos = target.position;
+                 endPos = target.position + ((-target.position + entrance.position).normalized * 10);
+
+                Handles.color = Color.blue;
+                Handles.DrawLine(startPos, endPos, thickness);
                 /*Gizmos.DrawCube(target.position,Vector3.one*2);
                 Gizmos.DrawCube(entrance.position,Vector3.one*2);
                 GUIStyle style = new GUIStyle();

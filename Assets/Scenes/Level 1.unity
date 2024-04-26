@@ -1207,6 +1207,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Path
       objectReference: {fileID: 0}
+    - target: {fileID: 4924763189609044586, guid: 398c0cc105d794459a2e54ee17961418,
+        type: 3}
+      propertyPath: thickness
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7892378230640173102, guid: 398c0cc105d794459a2e54ee17961418,
         type: 3}
       propertyPath: m_LocalPosition.x
